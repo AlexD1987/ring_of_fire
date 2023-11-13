@@ -1,0 +1,24 @@
+.startScreen {
+  background-image: url("../../assets/image/background2.jpg");
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .startWindow {
+    font-size: 36px;
+    display: flex;
+
+    img {
+      height: 70vh;
+      width: auto;
+    }
+
+    h1 {
+      position: absolute;
+      padding-left: 48px;
+      width: 100px;
+    }
+  }
+}
