@@ -49,7 +49,7 @@
         padding-left: 6px;
       }
     }
-    
+
     .btn-1 {
       --clr: white;
       --outline: 2px solid var(--clr);
@@ -57,9 +57,9 @@
       outline: var(--outline);
       border: var(--outline);
       outline-offset: -2px;
-      transition: outline-offset 200ms ease;
+      transition: outline-offset 100ms ease;
     }
-    
+
     .btn-1:hover,
     .btn-1:focus {
       outline: var(--outline);
