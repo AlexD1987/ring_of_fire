@@ -7,18 +7,64 @@
   align-items: center;
 
   .startWindow {
-    font-size: 36px;
+    font-size: 32px;
     display: flex;
+    height: 70vh;
 
     img {
       height: 70vh;
       width: auto;
     }
 
-    h1 {
+    .startScreenInlay {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
       position: absolute;
       padding-left: 48px;
       width: 100px;
+      height: 70vh;
+
+      h1 {
+        margin-block-start: 4px;
+      }
+    }
+
+    .btn {
+      width: 100px;
+      height: 30px;
+      display: inline-block;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: inherit;
+      border: 0;
+      line-height: 1;
+      background: none;
+      padding: .75em 1.5em;
+
+      h3 {
+        padding-left: 6px;
+      }
+    }
+    
+    .btn-1 {
+      --clr: white;
+      --outline: 2px solid var(--clr);
+      color: var(--clr);
+      outline: var(--outline);
+      border: var(--outline);
+      outline-offset: -2px;
+      transition: outline-offset 200ms ease;
+    }
+    
+    .btn-1:hover,
+    .btn-1:focus {
+      outline: var(--outline);
+      outline-offset: 2px;
+      // because of normalize
     }
   }
 }
