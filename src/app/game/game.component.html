@@ -1,3 +1,7 @@
 <div class="table">
-  <div>[class]="expression"</div>
+  <div class="cardStack">
+    <img [ngStyle]="{'right.px' : i * 4}" *ngFor="let c of [1, 2, 3, 4]; let i = index;"
+      src="../../assets/image/card_deck/Back_Grey.png" alt="">
+    <img (click)="selectCard()" [class.pickCard]="cardAnimation" class="topCard" style="right : 16px" src="../../assets/image/card_deck/Back_Grey.png" alt="">
+  </div>
 </div>

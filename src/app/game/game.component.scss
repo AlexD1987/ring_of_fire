@@ -3,4 +3,30 @@
   height: 100vh;
   max-width: 100%;
   background-image: url("../../assets/image/background2.jpg");
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.cardStack {
+  position: relative;
+
+  img {
+    position: absolute;
+
+  }
+}
+
+.topCard {
+  cursor: pointer;
+  transition: all 150ms ease-in-out;
+  &:hover {
+    transform: scale(1.1) translateY(-8px);
+  }
+}
+
+.pickCard {
+  transition: all 125ms ease-in-out;
+  transform: scale(1.5);
 }
