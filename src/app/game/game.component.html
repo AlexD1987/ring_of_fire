@@ -1,7 +1,10 @@
 <div class="table">
-  <div class="cardStack">
-    <img [ngStyle]="{'right.px' : i * 4}" *ngFor="let c of [1, 2, 3, 4]; let i = index;"
-      src="../../assets/image/card_deck/Back_Grey.png" alt="">
-    <img (click)="selectCard()" [class.pickCard]="cardAnimation" class="topCard" style="right : 16px" src="../../assets/image/card_deck/Back_Grey.png" alt="">
-  </div>
+    <div class="cardStack">
+        <img [ngStyle]="{'right.px' : i * 4}" *ngFor="let c of [1, 2, 3, 4]; let i = index;"
+            src="../../assets/image/card_deck/Back_Grey.png" alt="">
+        <img (click)="selectCard()" class="topCard" style="right : 16px"
+            src="../../assets/image/card_deck/Back_Grey.png" alt="">
+        <img (click)="selectCard()" *ngIf="cardAnimation" class="pickCard" style="right : 16px"
+            src="../../assets/image/card_deck/Clubs_1.png" alt="">
+    </div>
 </div>
