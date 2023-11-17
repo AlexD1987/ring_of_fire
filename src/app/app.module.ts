@@ -9,6 +9,7 @@ import { PlayerComponent } from './player/player.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { AddPlayerComponent } from './add-player/add-player.component';
 
 
 
@@ -17,7 +18,8 @@ import { MatIconModule } from '@angular/material/icon';
         AppComponent,
         StartScreenComponent,
         GameComponent,
-        PlayerComponent
+        PlayerComponent,
+        AddPlayerComponent
     ],
     imports: [
         BrowserModule,
