@@ -10,6 +10,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { AddPlayerComponent } from './add-player/add-player.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+
 
 
 
@@ -26,9 +31,14 @@ import { AddPlayerComponent } from './add-player/add-player.component';
         AppRoutingModule,
         BrowserAnimationsModule,
         MatButtonModule,
-        MatIconModule
+        MatIconModule,
+        MatDialogModule,
+        FormsModule,
+        MatFormFieldModule,
+        MatInputModule
     ],
     providers: [],
     bootstrap: [AppComponent]
 })
+
 export class AppModule { }
