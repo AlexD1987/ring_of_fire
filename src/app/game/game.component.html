@@ -1,15 +1,21 @@
-<app-player style="top: 200px;" class="playerPosition"></app-player>
+<app-player *ngFor="let player of game.players; let i = index" [ngStyle]="{'top.px' : 100 + (i * 100)}" [name]="player"
+    class="playerPosition"></app-player>
 
 <div class="table">
     <div class="cardStack">
-        <img [ngStyle]="{'right.px' : i * 4}" *ngFor="let c of [1, 2, 3, 4]; let i = index;"
+        <img [ngStyle]="{'right.px' : i * 6}" *ngFor="let c of [1, 2, 3, 4]; let i = index;"
             src="../../assets/image/card_deck/Back_Grey.png" alt="">
         <img (click)="selectCard()" class="topCard" style="right : 16px"
             src="../../assets/image/card_deck/Back_Grey.png" alt="">
 
 
-        <img *ngFor="let card of game.playedCard" class="playedCard" src="../../assets/image/card_deck/{{ card }}.png" alt="">
+        <img *ngFor="let card of game.playedCard" class="playedCard" src="../../assets/image/card_deck/{{ card }}.png"
+            alt="">
         <img (click)="selectCard()" *ngIf="cardAnimation" class="pickCard" style="right : 16px"
             src="../../assets/image/card_deck/{{ currentCard }}.png" alt="">
     </div>
 </div>
+
+<button class="addBtn" mat-fab color="primary" aria-label="Example icon button with a delete icon">
+    <mat-icon>add</mat-icon>
+</button>

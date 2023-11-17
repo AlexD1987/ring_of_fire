@@ -1,15 +1,23 @@
 .player {
-  width: 300px;
-  display: flex;
-  align-items: flex-end;
-  object-fit: cover;
-  padding-left: 16px;
-  background-color: rgba($color: #000000, $alpha: 0.2);
-  border-bottom-left-radius: 16px;
-  border-top-left-radius: 16px;
-  span {
-    font-size: 32px;
-    padding-bottom: 4px;
-    color: black;
-  }
+    width: 250px;
+    display: flex;
+    align-items: center;
+    object-fit: cover;
+    padding-left: 16px;
+    background-color: rgba($color: #000000, $alpha: 0.2);
+    border-bottom-left-radius: 40px;
+    border-top-left-radius: 40px;
+
+    img {
+        height: 70px;
+        width: auto;
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+
+    span {
+        font-size: 32px !important;
+        color: white !important;
+        padding-left: 16px;
+    }
 }
