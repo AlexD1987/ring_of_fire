@@ -9,15 +9,23 @@
     border-top-left-radius: 40px;
 
     img {
-        height: 70px;
+        height: 40px;
         width: auto;
         padding-top: 8px;
         padding-bottom: 8px;
     }
 
     span {
-        font-size: 32px !important;
-        color: white !important;
+        font-size: 28px !important;
+        color: white;
         padding-left: 16px;
     }
+}
+
+.player-active {
+  background-color: white !important;
+
+  span {
+    color: black !important;
+  }
 }
