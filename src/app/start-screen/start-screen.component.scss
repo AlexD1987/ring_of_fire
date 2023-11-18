@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "casino";
+  src: url("../../assets/font/casino/CasinoFlat.ttf");
+}
+
 .startScreen {
   background-image: url("../../assets/image/background2.jpg");
   width: 100vw;
@@ -27,11 +32,15 @@
 
       h1 {
         margin-block-start: 4px;
+        font-family: "casino";
+        font-size: 72px;
+        line-height: 64px;
+        letter-spacing: 4px;
       }
     }
 
     .btn {
-      width: 100px;
+      width: 70px;
       height: 30px;
       display: inline-block;
       display: flex;
@@ -47,6 +56,10 @@
 
       h3 {
         padding-left: 6px;
+        font-family: "casino";
+        font-size: 32px;
+        margin: 0;
+        margin-block-start: 0;
       }
     }
 

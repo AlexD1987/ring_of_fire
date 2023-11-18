@@ -1,5 +1,5 @@
 .player {
-    width: 250px;
+    width: 190px;
     display: flex;
     align-items: center;
     object-fit: cover;
@@ -16,16 +16,21 @@
     }
 
     span {
-        font-size: 28px !important;
+        font-size: 20px !important;
         color: white;
-        padding-left: 16px;
+        padding-left: 10px;
     }
 }
 
 .player-active {
   background-color: white !important;
 
+  img {
+    height: 50px !important;
+  }
+
   span {
     color: black !important;
+
   }
 }
