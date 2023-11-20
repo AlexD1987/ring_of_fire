@@ -10,12 +10,16 @@ import { AddPlayerComponent } from './../add-player/add-player.component';
 })
 export class GameComponent implements OnInit {
     cardAnimation = false;
+    emptyStack = false;
     currentCard: string = '';
     game: Game = new Game();
+    cardFlip = new Audio('../../assets/sounds/flip.mp3');
+    shuffleCards = new Audio('../../assets/sounds/shuffle.mp3');
 
     constructor(public dialog: MatDialog) { }
 
     ngOnInit(): void {
+        this.shuffleCards.play();
         this.newGame();
     }
 
@@ -26,9 +30,12 @@ export class GameComponent implements OnInit {
 
     selectCard() {
         if (!this.cardAnimation) {
+            this.cardFlip.play();
             this.currentCard = this.game.stack.pop()!;
             this.cardAnimation = true;
-            console.log(this.currentCard);
+            this.game.currentPlayer++;
+            this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
+            this.checkEndGame();
 
             setTimeout(() => {
                 this.game.playedCard.push(this.currentCard);
@@ -46,5 +53,11 @@ export class GameComponent implements OnInit {
             }
         });
     }
-    
+
+    checkEndGame() {
+        if (this.game.stack.length <= 0) {
+            this.emptyStack = true;
+        }
+    }
+
 }
