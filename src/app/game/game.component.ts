@@ -29,7 +29,7 @@ export class GameComponent implements OnInit {
     }
 
     selectCard() {
-        if (!this.cardAnimation) {
+        if (!this.cardAnimation && this.game.players.length > 1) {
             this.cardFlip.play();
             this.currentCard = this.game.stack.pop()!;
             this.cardAnimation = true;

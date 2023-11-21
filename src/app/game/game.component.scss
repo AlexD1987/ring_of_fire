@@ -10,7 +10,7 @@
 
 .playerPosition {
     position: absolute;
-    right: 0;
+    left: 0;
 }
 
 .cardStack {
@@ -60,10 +60,61 @@
     }
 }
 
+@keyframes responsivCardAnimation {
+    0% {
+        transform: scale(1.2);
+    }
+
+    30% {
+        transform: scale(1.4);
+    }
+
+    60% {
+        transform: scale(1.4);
+    }
+
+    100% {
+        transform: scale(1.1) translateX(80px) translateY(-100px) rotate(5deg);
+    }
+}
+
+
+
 .addBtn {
     position: absolute;
     bottom: 32px;
     right: 32px;
     background-color: lightgrey;
     color: black;
+}
+
+@media (max-width: 850px) {
+    .table {
+        align-items: center;
+        width: auto;
+        height: 100%;
+    }
+
+    .cardStack{
+        margin-top: 15%;
+        margin-left: 160px;
+        img {
+            height: 105px;
+        }
+    }
+
+    .addBtn {
+        top: 16px;
+        right: 16px;
+    }
+
+    .playedCard {
+        right: 16px;
+        transform: scale(1.1) translateX(80px) translateY(-100px) rotate(5deg);
+    }
+    
+    .pickCard {
+        animation: responsivCardAnimation 1.5s ease-in-out;
+        transform: scale(1.1) translateX(80px) translateY(-100px) rotate(5deg);
+    }
 }
