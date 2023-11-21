@@ -12,7 +12,6 @@ export class Game {
             this.stack.push('Diamond_' + i);
         }
         shuffle(this.stack);
-        console.log(this.stack);
     }
 }
 
