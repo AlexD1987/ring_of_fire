@@ -95,9 +95,10 @@
         height: 100%;
     }
 
-    .cardStack{
+    .cardStack {
         margin-top: 15%;
         margin-left: 160px;
+
         img {
             height: 105px;
         }
@@ -112,7 +113,7 @@
         right: 16px;
         transform: scale(1.1) translateX(80px) translateY(-100px) rotate(5deg);
     }
-    
+
     .pickCard {
         animation: responsivCardAnimation 1.5s ease-in-out;
         transform: scale(1.1) translateX(80px) translateY(-100px) rotate(5deg);

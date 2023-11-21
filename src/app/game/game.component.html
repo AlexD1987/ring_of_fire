@@ -10,8 +10,6 @@
                 src="../../assets/image/card_deck/Back_Grey.png" alt="">
         </ng-container>
 
-
-
         <img *ngFor="let card of game.playedCard" class="playedCard" src="../../assets/image/card_deck/{{ card }}.png"
             alt="">
         <img (click)="selectCard()" *ngIf="cardAnimation" class="pickCard" style="right : 16px"

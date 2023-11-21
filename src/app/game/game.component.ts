@@ -59,5 +59,4 @@ export class GameComponent implements OnInit {
             this.emptyStack = true;
         }
     }
-
 }

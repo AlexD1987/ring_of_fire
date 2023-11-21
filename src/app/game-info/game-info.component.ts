@@ -32,7 +32,7 @@ export class GameInfoComponent implements OnInit, OnChanges {
 
     ngOnInit(): void {
         this.title = 'Welcome to Ring of Fire';
-        this.description = 'Please add min. two Players to start the Game!'; 
+        this.description = 'Please add min. two Players to start the Game!';
     }
 
     ngOnChanges() {
