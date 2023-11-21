@@ -115,7 +115,7 @@
     }
 
     .pickCard {
-        animation: responsivCardAnimation 1.5s ease-in-out;
-        transform: scale(1.1) translateX(80px) translateY(-100px) rotate(5deg);
+        animation: responsivCardAnimation 1.5s ease-in-out !important;
+        transform: scale(1.1) translateX(80px) translateY(-100px) rotate(5deg) !important;
     }
 }

@@ -30,12 +30,22 @@ export class GameInfoComponent implements OnInit, OnChanges {
 
     constructor() { }
 
+
+    /**
+     * Lifecycle hook called after the component is initialized.
+     */
     ngOnInit(): void {
+        // Set initial title and description for the component.
         this.title = 'Welcome to Ring of Fire';
-        this.description = 'Please add min. two Players to start the Game!';
+        this.description = 'Please add a minimum of two players to start the game!';
     }
 
-    ngOnChanges() {
+
+    /**
+     * Lifecycle hook called when one or more input properties change.
+     */
+    ngOnChanges(): void {
+        // If a card is provided, extract card number and update title and description.
         if (this.card) {
             let cardNumber = +this.card.split('_')[1];
             this.title = this.cardAction[cardNumber - 1].title;
