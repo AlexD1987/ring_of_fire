@@ -1,9 +1,23 @@
+/**
+ * Represents the Ring of Fire game.
+ */
 export class Game {
+    /** Array of player names. */
     public players: string[] = [];
+
+    /** Array of cards in the game stack. */
     public stack: string[] = [];
+
+    /** Array of cards played during the game. */
     public playedCard: string[] = [];
+
+    /** Index of the current player. */
     public currentPlayer: number = 0;
 
+    /**
+     * Constructor for the Game class.
+     * Initializes the game stack with standard playing cards and shuffles them.
+     */
     constructor() {
         for (let i = 1; i < 14; i++) {
             this.stack.push('Spades_' + i);
@@ -15,7 +29,14 @@ export class Game {
     }
 }
 
-function shuffle(array: any[]) {
+
+/**
+ * Shuffles the elements of an array using the Fisher-Yates algorithm.
+ *
+ * @param array - The array to be shuffled.
+ * @returns The shuffled array.
+ */
+function shuffle(array: any[]): any[] {
     let currentIndex = array.length,
         randomIndex;
 
@@ -25,7 +46,7 @@ function shuffle(array: any[]) {
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex--;
 
-        // And swap it with the current element.
+        // Swap the current element with the randomly picked element.
         [array[currentIndex], array[randomIndex]] = [
             array[randomIndex],
             array[currentIndex],

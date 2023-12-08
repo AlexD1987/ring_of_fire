@@ -1,7 +1,9 @@
 import { Game } from './../../models/game';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddPlayerComponent } from './../add-player/add-player.component';
+import { Firestore, collectionData, collection, doc } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-game',
@@ -15,8 +17,12 @@ export class GameComponent implements OnInit {
     game: Game = new Game();
     cardFlip = new Audio('assets/sounds/flip.mp3');
     shuffleCards = new Audio('assets/sounds/shuffle.mp3');
+    firestore: Firestore = inject(Firestore)
+    items$: Observable<any[]>;
 
     constructor(public dialog: MatDialog) { }
+    const aCollection = collection(this.firestore, 'items')
+    this.items$ = collectionData(aCollection);
 
 
     /**
@@ -28,6 +34,7 @@ export class GameComponent implements OnInit {
 
         // Start a new game.
         this.newGame();
+
     }
 
 

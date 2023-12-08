@@ -16,6 +16,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { GameInfoComponent } from './game-info/game-info.component';
 import { MatCardModule } from '@angular/material/card';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 
 
 
@@ -23,28 +25,30 @@ import { MatCardModule } from '@angular/material/card';
 
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        StartScreenComponent,
-        GameComponent,
-        PlayerComponent,
-        AddPlayerComponent,
-        GameInfoComponent
-    ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        MatButtonModule,
-        MatIconModule,
-        MatDialogModule,
-        FormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatCardModule
-    ],
-    providers: [],
-    bootstrap: [AppComponent]
+  declarations: [
+    AppComponent,
+    StartScreenComponent,
+    GameComponent,
+    PlayerComponent,
+    AddPlayerComponent,
+    GameInfoComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatIconModule,
+    MatDialogModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCardModule,
+    provideFirebaseApp(() => initializeApp({ "projectId": "ring-of-fire-d28f0", "appId": "1:191867475498:web:4aacd996f513a76624d553", "storageBucket": "ring-of-fire-d28f0.appspot.com", "apiKey": "AIzaSyCAY9X4e7dACj2POuYcabbnKB2kQ98kJ-A", "authDomain": "ring-of-fire-d28f0.firebaseapp.com", "messagingSenderId": "191867475498" })),
+    provideFirestore(() => getFirestore())
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
 })
 
 export class AppModule { }
