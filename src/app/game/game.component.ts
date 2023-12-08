@@ -18,9 +18,12 @@ export class GameComponent implements OnInit {
     cardFlip = new Audio('assets/sounds/flip.mp3');
     shuffleCards = new Audio('assets/sounds/shuffle.mp3');
     firestore: Firestore = inject(Firestore)
-    items$: Observable<any[]>;
+    items$!: Observable<any[]>;
 
     constructor(public dialog: MatDialog) { }
+  ngOnInit(): void {
+    throw new Error('Method not implemented.');
+  }
     const aCollection = collection(this.firestore, 'items')
     this.items$ = collectionData(aCollection);
 
