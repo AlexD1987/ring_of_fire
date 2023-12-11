@@ -2,8 +2,9 @@ import { Game } from './../../models/game';
 import { Component, OnInit, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddPlayerComponent } from './../add-player/add-player.component';
-import { Firestore, collectionData, collection, doc } from '@angular/fire/firestore';
+import { Firestore, collection, doc, onSnapshot, addDoc } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+
 
 @Component({
     selector: 'app-game',
@@ -17,15 +18,31 @@ export class GameComponent implements OnInit {
     game: Game = new Game();
     cardFlip = new Audio('assets/sounds/flip.mp3');
     shuffleCards = new Audio('assets/sounds/shuffle.mp3');
-    firestore: Firestore = inject(Firestore)
-    items$!: Observable<any[]>;
+    firestore: Firestore = inject(Firestore);
+    currentGame: string | undefined;
+    gameList: any;
+    unsubGame;
+    unsubSingle;
 
-    constructor(public dialog: MatDialog) { }
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
-  }
-    const aCollection = collection(this.firestore, 'items')
-    this.items$ = collectionData(aCollection);
+    constructor(public dialog: MatDialog) {
+        this.unsubGame = this.subGame();
+
+        this.unsubSingle = onSnapshot(this.getSingleGame("games", "this.currentGame!"), (game) => {
+
+        });
+    }
+
+
+    subGame() {
+        return onSnapshot(this.getGameCollection(), (gameList) => {
+            this.gameList = [];
+            gameList.forEach(element => {
+                this.gameList.push(element.id, element.data());
+                this.currentGame = element.id;
+            })
+            console.log(this.gameList);
+        });
+    }
 
 
     /**
@@ -40,6 +57,35 @@ export class GameComponent implements OnInit {
 
     }
 
+    ngOnDestroy() {
+        this.unsubGame();
+        this.unsubSingle();
+    }
+
+    getGameCollection() {
+        return collection(this.firestore, 'games');
+    }
+
+    getSingleGame(gameId: string, singleId: string) {
+        return doc(collection(this.firestore, gameId), singleId);
+    }
+
+ /*    setNewGame(playerName: string): void {
+        const newGame = {
+            player: [playerName],
+            currentPlayer: 0,
+        };
+
+        addDoc(collection(this.firestore, 'games'), newGame)
+            .then((docRef) => {
+                this.currentGame = docRef.id;
+                console.log('current game', this.currentGame);
+            })
+            .catch((error) => {
+                console.error('Fehler beim Erstellen eines neuen Spiels:', error);
+            });
+    } */
+
 
     /**
      * Initializes a new game.
@@ -47,6 +93,7 @@ export class GameComponent implements OnInit {
     newGame(): void {
         // Create a new Game instance.
         this.game = new Game();
+        addDoc(collection(this.firestore, 'games'), this.game.toJson());
     }
 
 
@@ -84,13 +131,14 @@ export class GameComponent implements OnInit {
         // Subscribe to the afterClosed event, add the player name to the game's players.
         dialogRef.afterClosed().subscribe((name: string) => {
             if (name) this.game.players.push(name);
+
         });
     }
 
 
     /**
-  * Checks if the game has ended by examining the stack.
-  */
+    * Checks if the game has ended by examining the stack.
+    */
     checkEndGame(): void {
         // Set 'emptyStack' to true if the game stack is empty.
         if (this.game.stack.length <= 0) {
