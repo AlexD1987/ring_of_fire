@@ -4,6 +4,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddPlayerComponent } from './../add-player/add-player.component';
 import { Firestore, collection, doc, onSnapshot, addDoc } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { updateDoc } from 'firebase/firestore';
 
 
 @Component({
@@ -20,11 +22,12 @@ export class GameComponent implements OnInit {
     shuffleCards = new Audio('assets/sounds/shuffle.mp3');
     firestore: Firestore = inject(Firestore);
     currentGame: string | undefined;
+    savedGame: any;
     gameList: any;
     unsubGame;
     unsubSingle;
 
-    constructor(public dialog: MatDialog) {
+    constructor(private route:ActivatedRoute, public dialog: MatDialog) {
         this.unsubGame = this.subGame();
 
         this.unsubSingle = onSnapshot(this.getSingleGame("games", "this.currentGame!"), (game) => {
@@ -54,12 +57,23 @@ export class GameComponent implements OnInit {
 
         // Start a new game.
         this.newGame();
+        this.route.params.subscribe( (params) => {
+          console.log(params['id']);
+          doc(collection(this.firestore, 'games'), params['id']);
+          console.log(this.game);
+          this.savedGame = params['id'];
+          this.updateGame();
+        } )
 
     }
 
     ngOnDestroy() {
         this.unsubGame();
         this.unsubSingle();
+    }
+
+    async updateGame() {
+      console.log(this.savedGame);
     }
 
     getGameCollection() {
@@ -93,7 +107,7 @@ export class GameComponent implements OnInit {
     newGame(): void {
         // Create a new Game instance.
         this.game = new Game();
-        addDoc(collection(this.firestore, 'games'), this.game.toJson());
+        /* addDoc(collection(this.firestore, 'games'), this.game.toJson()); */
     }
 
 
