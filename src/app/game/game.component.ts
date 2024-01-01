@@ -1,8 +1,8 @@
 import { Game } from './../../models/game';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddPlayerComponent } from './../add-player/add-player.component';
-import { Firestore, collection, doc, onSnapshot, addDoc } from '@angular/fire/firestore';
+import { Firestore, collection, doc, onSnapshot, addDoc, getDoc } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { updateDoc } from 'firebase/firestore';
@@ -13,7 +13,7 @@ import { updateDoc } from 'firebase/firestore';
     templateUrl: './game.component.html',
     styleUrls: ['./game.component.scss'],
 })
-export class GameComponent implements OnInit {
+export class GameComponent implements OnInit, OnDestroy {
     cardAnimation = false;
     emptyStack = false;
     currentCard: string = '';
@@ -22,12 +22,17 @@ export class GameComponent implements OnInit {
     shuffleCards = new Audio('assets/sounds/shuffle.mp3');
     firestore: Firestore = inject(Firestore);
     currentGame: string | undefined;
+    currentId: string | undefined;
     savedGame: any;
     gameList: any;
     unsubGame;
     unsubSingle;
 
-    constructor(private route:ActivatedRoute, public dialog: MatDialog) {
+    constructor(private route: ActivatedRoute, public dialog: MatDialog) {
+        this.route.params.subscribe((params) => {
+            this.currentId = params['id'];
+            this.savedGame = doc(collection(this.firestore, 'games'), this.currentId);
+        })
         this.unsubGame = this.subGame();
 
         this.unsubSingle = onSnapshot(this.getSingleGame("games", "this.currentGame!"), (game) => {
@@ -37,14 +42,18 @@ export class GameComponent implements OnInit {
 
 
     subGame() {
-        return onSnapshot(this.getGameCollection(), (gameList) => {
-            this.gameList = [];
-            gameList.forEach(element => {
-                this.gameList.push(element.id, element.data());
-                this.currentGame = element.id;
-            })
-            console.log(this.gameList);
-        });
+        return onSnapshot(this.getSingleGame("games", this.currentId!), (game) => {
+            if (game.exists()) {
+                const gameData = game.data();
+                this.game = new Game();
+                console.log(gameData);
+
+                this.game.players = gameData['players'];
+                this.game.stack = gameData['stack'];
+                this.game.playedCard = gameData['playedCard'];
+                this.game.currentPlayer = gameData['currentPlayer'];
+            }
+        })
     }
 
 
@@ -57,13 +66,7 @@ export class GameComponent implements OnInit {
 
         // Start a new game.
         this.newGame();
-        this.route.params.subscribe( (params) => {
-          console.log(params['id']);
-          doc(collection(this.firestore, 'games'), params['id']);
-          console.log(this.game);
-          this.savedGame = params['id'];
-          this.updateGame();
-        } )
+
 
     }
 
@@ -73,8 +76,19 @@ export class GameComponent implements OnInit {
     }
 
     async updateGame() {
-      console.log(this.savedGame);
+        try {
+            if (this.savedGame) {
+                const updatedGameData = this.game.toJson();
+                await updateDoc(this.savedGame, updatedGameData);
+                console.log('Spiel erfolgreich aktualisiert.');
+            } else {
+                console.error('Fehler: savedGame ist nicht korrekt initialisiert.');
+            }
+        } catch (error) {
+            console.error('Fehler beim Aktualisieren des Spiels:', error);
+        }
     }
+
 
     getGameCollection() {
         return collection(this.firestore, 'games');
@@ -84,21 +98,21 @@ export class GameComponent implements OnInit {
         return doc(collection(this.firestore, gameId), singleId);
     }
 
- /*    setNewGame(playerName: string): void {
-        const newGame = {
-            player: [playerName],
-            currentPlayer: 0,
-        };
+    /*    setNewGame(playerName: string): void {
+           const newGame = {
+               player: [playerName],
+               currentPlayer: 0,
+           };
 
-        addDoc(collection(this.firestore, 'games'), newGame)
-            .then((docRef) => {
-                this.currentGame = docRef.id;
-                console.log('current game', this.currentGame);
-            })
-            .catch((error) => {
-                console.error('Fehler beim Erstellen eines neuen Spiels:', error);
-            });
-    } */
+           addDoc(collection(this.firestore, 'games'), newGame)
+               .then((docRef) => {
+                   this.currentGame = docRef.id;
+                   console.log('current game', this.currentGame);
+               })
+               .catch((error) => {
+                   console.error('Fehler beim Erstellen eines neuen Spiels:', error);
+               });
+       } */
 
 
     /**
@@ -132,6 +146,7 @@ export class GameComponent implements OnInit {
                 this.cardAnimation = false;
             }, 1500);
         }
+        this.updateGame();
     }
 
 

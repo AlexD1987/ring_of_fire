@@ -33,7 +33,7 @@ export class Game {
         players: this.players,
         stack: this.stack,
         playedCard: this.playedCard,
-        currenPlayer: this.currentPlayer
+        currentPlayer: this.currentPlayer
       };
     }
 }
