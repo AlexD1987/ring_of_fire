@@ -41,6 +41,7 @@ export class GameComponent implements OnInit, OnDestroy {
     }
 
 
+
     subGame() {
         return onSnapshot(this.getSingleGame("games", this.currentId!), (game) => {
             if (game.exists()) {
@@ -57,6 +58,7 @@ export class GameComponent implements OnInit, OnDestroy {
     }
 
 
+
     /**
      * Lifecycle hook called after the component is initialized.
      */
@@ -66,14 +68,16 @@ export class GameComponent implements OnInit, OnDestroy {
 
         // Start a new game.
         this.newGame();
-
-
     }
+
+
 
     ngOnDestroy() {
         this.unsubGame();
         this.unsubSingle();
     }
+
+
 
     async updateGame() {
         try {
@@ -90,13 +94,18 @@ export class GameComponent implements OnInit, OnDestroy {
     }
 
 
+
     getGameCollection() {
         return collection(this.firestore, 'games');
     }
 
+
+
     getSingleGame(gameId: string, singleId: string) {
         return doc(collection(this.firestore, gameId), singleId);
     }
+
+
 
     /*    setNewGame(playerName: string): void {
            const newGame = {
@@ -115,6 +124,8 @@ export class GameComponent implements OnInit, OnDestroy {
        } */
 
 
+
+
     /**
      * Initializes a new game.
      */
@@ -123,6 +134,7 @@ export class GameComponent implements OnInit, OnDestroy {
         this.game = new Game();
         /* addDoc(collection(this.firestore, 'games'), this.game.toJson()); */
     }
+
 
 
     /**
@@ -150,6 +162,7 @@ export class GameComponent implements OnInit, OnDestroy {
     }
 
 
+
     /**
      * Opens a dialog to add a player.
      */
@@ -160,10 +173,11 @@ export class GameComponent implements OnInit, OnDestroy {
         // Subscribe to the afterClosed event, add the player name to the game's players.
         dialogRef.afterClosed().subscribe((name: string) => {
             if (name) this.game.players.push(name);
-
+            this.updateGame();
         });
     }
 
+    
 
     /**
     * Checks if the game has ended by examining the stack.

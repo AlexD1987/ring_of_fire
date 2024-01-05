@@ -5,11 +5,13 @@ import { GameComponent } from './game/game.component';
 
 const routes: Routes = [
     { path: '', component: StartScreenComponent },
-    { path: 'game/:id', component: GameComponent }
+    { path: 'game/:id', component: GameComponent },
+    { path: 'game', component: GameComponent }
 ];
 
 @NgModule({
     imports: [RouterModule.forRoot(routes)],
     exports: [RouterModule]
 })
+
 export class AppRoutingModule { }
