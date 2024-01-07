@@ -25,8 +25,8 @@ export class StartScreenComponent implements OnInit {
 
     }
 
-    
-    
+
+
     /**
      * Creates a new game in the Firebase database and navigates to the game view.
      * @async

@@ -32,7 +32,7 @@ export class GameComponent implements OnInit, OnDestroy {
         this.route.params.subscribe((params) => {
             this.currentId = params['id'];
             this.savedGame = doc(collection(this.firestore, 'games'), this.currentId);
-        })
+        });
         this.unsubGame = this.subGame();
 
         this.unsubSingle = onSnapshot(this.getSingleGame("games", "this.currentGame!"), (game) => {
@@ -53,6 +53,8 @@ export class GameComponent implements OnInit, OnDestroy {
                 this.game.stack = gameData['stack'];
                 this.game.playedCard = gameData['playedCard'];
                 this.game.currentPlayer = gameData['currentPlayer'];
+
+                this.checkEndGame();
             }
         })
     }
@@ -121,8 +123,7 @@ export class GameComponent implements OnInit, OnDestroy {
                .catch((error) => {
                    console.error('Fehler beim Erstellen eines neuen Spiels:', error);
                });
-       } */
-
+     } */
 
 
 
@@ -177,7 +178,7 @@ export class GameComponent implements OnInit, OnDestroy {
         });
     }
 
-    
+
 
     /**
     * Checks if the game has ended by examining the stack.

@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Game } from './../../models/game';
 
 @Component({
     selector: 'app-game-info',

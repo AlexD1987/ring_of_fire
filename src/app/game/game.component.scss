@@ -78,13 +78,19 @@
     }
 }
 
-
-
 .addBtn {
     position: absolute;
-    bottom: 32px;
+    bottom: 16px;
     right: 32px;
     background-color: lightgrey;
+    color: black;
+}
+
+.linkBtn {
+    position: absolute;
+    bottom: 84px;
+    right: 32px;
+    background-color: lightgray;
     color: black;
 }
 
@@ -107,6 +113,11 @@
     .addBtn {
         top: 16px;
         right: 16px;
+    }
+
+    .linkBtn {
+        top: 82px;
+        right: 16px !important;
     }
 
     .playedCard {
