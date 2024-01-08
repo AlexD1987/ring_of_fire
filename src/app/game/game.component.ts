@@ -1,5 +1,6 @@
 import { Game } from './../../models/game';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Clipboard } from '@angular/cdk/clipboard';
 import { MatDialog } from '@angular/material/dialog';
 import { AddPlayerComponent } from './../add-player/add-player.component';
 import { Firestore, collection, doc, onSnapshot, addDoc, getDoc } from '@angular/fire/firestore';
@@ -25,10 +26,11 @@ export class GameComponent implements OnInit, OnDestroy {
     currentId: string | undefined;
     savedGame: any;
     gameList: any;
+    currentURL: string;
     unsubGame;
     unsubSingle;
 
-    constructor(private route: ActivatedRoute, public dialog: MatDialog) {
+    constructor(private route: ActivatedRoute, public dialog: MatDialog, private clipboard: Clipboard) {
         this.route.params.subscribe((params) => {
             this.currentId = params['id'];
             this.savedGame = doc(collection(this.firestore, 'games'), this.currentId);
@@ -38,6 +40,7 @@ export class GameComponent implements OnInit, OnDestroy {
         this.unsubSingle = onSnapshot(this.getSingleGame("games", "this.currentGame!"), (game) => {
 
         });
+        this.currentURL = window.location.href;
     }
 
 
@@ -109,24 +112,6 @@ export class GameComponent implements OnInit, OnDestroy {
 
 
 
-    /*    setNewGame(playerName: string): void {
-           const newGame = {
-               player: [playerName],
-               currentPlayer: 0,
-           };
-
-           addDoc(collection(this.firestore, 'games'), newGame)
-               .then((docRef) => {
-                   this.currentGame = docRef.id;
-                   console.log('current game', this.currentGame);
-               })
-               .catch((error) => {
-                   console.error('Fehler beim Erstellen eines neuen Spiels:', error);
-               });
-     } */
-
-
-
     /**
      * Initializes a new game.
      */
@@ -176,6 +161,13 @@ export class GameComponent implements OnInit, OnDestroy {
             if (name) this.game.players.push(name);
             this.updateGame();
         });
+    }
+
+
+
+    linkGame() {
+        this.clipboard.copy(this.currentURL);
+        console.log(this.currentURL);
     }
 
 
