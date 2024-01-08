@@ -7,6 +7,7 @@ import { Firestore, collection, doc, onSnapshot, addDoc, getDoc } from '@angular
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { updateDoc } from 'firebase/firestore';
+import { LinkGameComponent } from '../link-game/link-game.component';
 
 
 @Component({
@@ -45,21 +46,32 @@ export class GameComponent implements OnInit, OnDestroy {
 
 
 
+    /**
+     * Subscribes to real-time updates of a single game document in Firestore.
+     * Fetches and updates the local game state based on the document changes.
+     * Logs game data to the console.
+     * @returns {() => void} - A function to unsubscribe from the real-time updates.
+     */
     subGame() {
         return onSnapshot(this.getSingleGame("games", this.currentId!), (game) => {
             if (game.exists()) {
+                // Extract game data from the Firestore document
                 const gameData = game.data();
-                this.game = new Game();
-                console.log(gameData);
 
+                // Update local game state
+                this.game = new Game();
                 this.game.players = gameData['players'];
                 this.game.stack = gameData['stack'];
                 this.game.playedCard = gameData['playedCard'];
                 this.game.currentPlayer = gameData['currentPlayer'];
 
+                // Log game data to the console
+                console.log(gameData);
+
+                // Check for end game conditions
                 this.checkEndGame();
             }
-        })
+        });
     }
 
 
@@ -77,35 +89,63 @@ export class GameComponent implements OnInit, OnDestroy {
 
 
 
-    ngOnDestroy() {
+    /**
+     * Lifecycle hook called just before the component is destroyed.
+     * Unsubscribes from game and single document listeners to prevent memory leaks.
+     * @returns {void}
+     */
+    ngOnDestroy(): void {
         this.unsubGame();
         this.unsubSingle();
     }
 
 
 
-    async updateGame() {
+    /**
+     * Asynchronously updates the Firestore document for the saved game with the latest game data.
+     * Logs success or error messages to the console.
+     * @returns {Promise<void>} - A promise indicating the completion of the update operation.
+     */
+    async updateGame(): Promise<void> {
         try {
+            // Check if the savedGame is initialized
             if (this.savedGame) {
+                // Convert game data to JSON format
                 const updatedGameData = this.game.toJson();
+
+                // Update the Firestore document with the latest game data
                 await updateDoc(this.savedGame, updatedGameData);
-                console.log('Spiel erfolgreich aktualisiert.');
+
+                // Log success message
+                console.log('Game successfully updated.');
             } else {
-                console.error('Fehler: savedGame ist nicht korrekt initialisiert.');
+                // Log an error if savedGame is not correctly initialized
+                console.error('Error: savedGame is not properly initialized.');
             }
         } catch (error) {
-            console.error('Fehler beim Aktualisieren des Spiels:', error);
+            // Log an error if there's an issue updating the game
+            console.error('Error updating the game:', error);
         }
     }
 
 
 
+    /**
+     * Retrieves the Firestore collection reference for the 'games' collection.
+     * @returns {CollectionReference} - The Firestore collection reference for the 'games' collection.
+     */
     getGameCollection() {
         return collection(this.firestore, 'games');
     }
 
 
 
+    /**
+     * Retrieves a single game document from Firestore based on the provided game and single document IDs.
+     * @param {string} gameId - The ID of the game document.
+     * @param {string} singleId - The ID of the single document within the specified game.
+     * @returns {DocumentReference} - The Firestore document reference for the specified single game document.
+     */
     getSingleGame(gameId: string, singleId: string) {
         return doc(collection(this.firestore, gameId), singleId);
     }
@@ -165,7 +205,28 @@ export class GameComponent implements OnInit, OnDestroy {
 
 
 
-    linkGame() {
+    /**
+     * Opens an information box by linking a game and displaying the LinkGameComponent.
+     * Closes the information box after 5000 milliseconds (5 seconds).
+     * @returns {void}
+     */
+    openInfoBox(): void {
+        this.linkGame();
+
+        const infoRef = this.dialog.open(LinkGameComponent);
+
+        setTimeout(() => {
+            infoRef.close();
+        }, 5000);
+    }
+
+
+
+    /**
+     * Copies the current URL to the clipboard and logs it to the console.
+     * @returns {void}
+     */
+    linkGame(): void {
         this.clipboard.copy(this.currentURL);
         console.log(this.currentURL);
     }

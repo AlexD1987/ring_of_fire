@@ -1,0 +1,11 @@
+.infoBox {
+  color: black;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 16px;
+
+  h3 {
+    margin-block-end: 0;
+  }
+}
