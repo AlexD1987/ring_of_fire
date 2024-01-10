@@ -46,8 +46,7 @@ import { LinkGameComponent } from './link-game/link-game.component';
     MatFormFieldModule,
     MatInputModule,
     MatCardModule,
-    provideFirebaseApp(() => initializeApp({ "projectId": "ring-of-fire-d28f0", "appId": "1:191867475498:web:4aacd996f513a76624d553", "storageBucket": "ring-of-fire-d28f0.appspot.com", "apiKey": "AIzaSyCAY9X4e7dACj2POuYcabbnKB2kQ98kJ-A", "authDomain": "ring-of-fire-d28f0.firebaseapp.com", "messagingSenderId": "191867475498" })),
-    provideFirestore(() => getFirestore())
+    provideFirebaseApp(() => initializeApp({ "projectId": "ring-of-fire-d28f0", "appId": "1:191867475498:web:4aacd996f513a76624d553", "storageBucket": "ring-of-fire-d28f0.appspot.com", "apiKey": "AIzaSyCAY9X4e7dACj2POuYcabbnKB2kQ98kJ-A", "authDomain": "ring-of-fire-d28f0.firebaseapp.com", "messagingSenderId": "191867475498" })),    provideFirestore(() => getFirestore())
   ],
   providers: [],
   bootstrap: [AppComponent]
