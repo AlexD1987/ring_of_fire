@@ -1,4 +1,8 @@
 {
+  "projects": {
+    "default": "ring-of-fire-d28f0",
+    "ring-of-fire": "ring-of-fire-d28f0"
+  },
   "targets": {
     "ring-of-fire-d28f0": {
       "hosting": {
@@ -8,7 +12,5 @@
       }
     }
   },
-  "projects": {
-    "default": "ring-of-fire-d28f0"
-  }
+  "etags": {}
 }

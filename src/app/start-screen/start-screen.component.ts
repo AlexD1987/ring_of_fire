@@ -38,7 +38,6 @@ export class StartScreenComponent implements OnInit {
         try {
             const docRef = await addDoc(collection(this.firestore, 'games'), this.game.toJson());
             this.newId = docRef.id;
-            console.log('Neues Spiel erstellt mit ID:', this.newId);
             this.router.navigateByUrl(`/game/${this.newId}`);
         } catch (error) {
             console.error('Fehler beim Erstellen eines neuen Spiels:', error);

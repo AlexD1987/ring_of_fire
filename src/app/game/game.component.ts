@@ -65,9 +65,6 @@ export class GameComponent implements OnInit, OnDestroy {
                 this.game.playedCard = gameData['playedCard'];
                 this.game.currentPlayer = gameData['currentPlayer'];
 
-                // Log game data to the console
-                console.log(gameData);
-
                 // Check for end game conditions
                 this.checkEndGame();
             }
@@ -116,8 +113,6 @@ export class GameComponent implements OnInit, OnDestroy {
                 // Update the Firestore document with the latest game data
                 await updateDoc(this.savedGame, updatedGameData);
 
-                // Log success message
-                console.log('Game successfully updated.');
             } else {
                 // Log an error if savedGame is not correctly initialized
                 console.error('Error: savedGame is not properly initialized.');
@@ -228,7 +223,6 @@ export class GameComponent implements OnInit, OnDestroy {
      */
     linkGame(): void {
         this.clipboard.copy(this.currentURL);
-        console.log(this.currentURL);
     }
 
 
